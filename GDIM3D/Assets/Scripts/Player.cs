@@ -10,8 +10,10 @@ public class Player : MonoBehaviour
     public Player_IdleState idleState { get; private set; }
     public Player_MoveState moveState { get; private set; }
 
+    // --------- Components -------------
     public Animator animator { get; private set; }
     public Rigidbody rb { get; private set; }
+    public HealthComponent healthComponent { get; private set; }
     
     [field: SerializeField] public float speed { get; private set; }
     [SerializeField] private float turnSpeed = 10f;
