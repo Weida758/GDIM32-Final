@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CharacterBaseState : MonoBehaviour
+public class CharacterBaseState
 {
     protected StateMachine stateMachine;
     protected string animBoolName;

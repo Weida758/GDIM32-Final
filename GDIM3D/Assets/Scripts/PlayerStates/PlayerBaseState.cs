@@ -13,16 +13,21 @@ public class PlayerBaseState : CharacterBaseState
 
     public override void Enter()
     {
+        base.Enter();
         
-    }
-
-    public override void Exit()
-    {
-        
+        player.animator.SetBool(animBoolName, true);
     }
 
     public override void Update()
     {
+        base.Update();
         
+        player.animator.SetFloat("magnitude", player.moveInput.magnitude, 0.1f, Time.deltaTime);
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+        player.animator.SetBool(animBoolName, false);
     }
 }
