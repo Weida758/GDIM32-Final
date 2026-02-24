@@ -2,7 +2,5 @@ using UnityEngine;
 
 public abstract class ItemEffect : ScriptableObject
 {
-    public float value;
-    public float duration;
-    public abstract void Apply(Player player);
+    public abstract void Apply(Player player, float value, float duration);
 }

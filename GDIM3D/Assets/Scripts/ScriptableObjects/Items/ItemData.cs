@@ -8,4 +8,5 @@ public class ItemData : ScriptableObject
     public string itemName;
     public string itemDescription;
     public int maxStackSize;
+    public bool isStackable;
 }
