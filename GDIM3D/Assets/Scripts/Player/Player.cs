@@ -2,31 +2,35 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [field: SerializeField] public StateMachine stateMachine { get; private set; }
+    public StateMachine stateMachine { get; private set; }
 
-    private PlayerInputs inputs;
-    
+    public PlayerInputs inputs { get; private set; }
+
     // -------- States ---------
     [DisplayOnly] public string currentState;
     public Player_IdleState idleState { get; private set; }
     public Player_MoveState moveState { get; private set; }
+    public Player_JumpState jumpState { get; private set; }
+    public Player_FallState fallState { get; private set; }
 
     // --------- Components -------------
     public Animator animator { get; private set; }
     public Rigidbody rb { get; private set; }
     public HealthComponent healthComponent { get; private set; }
     [SerializeField] private GameObject inventoryUI;
-    
+
     // --------- Data -------------------
     [field: SerializeField] public float speed { get; private set; }
     [SerializeField] private float turnSpeed = 10f;
     [SerializeField] private Transform hitboxOrigin;
     private bool inventoryOpened = false;
-    
+    [DisplayOnly] public bool isGrounded = true;
+
     // -------- Movement -------------------
     public Vector3 moveDirection { get; private set; }
     private float horizontal, vertical;
     public Vector3 moveInput { get; private set; }
+    [field: SerializeField] public float jumpForce { get; private set; }
     
     public Transform cam;
     private OrbitCamera orbitCamera;
@@ -42,6 +46,8 @@ public class Player : MonoBehaviour
 
         idleState = new Player_IdleState(stateMachine, "idle", this);
         moveState = new Player_MoveState(stateMachine, "move", this);
+        jumpState = new Player_JumpState(stateMachine, "jump", this);
+        fallState = new Player_FallState(stateMachine, "fall", this);
         
         healthComponent = GetComponent<HealthComponent>();
     }
@@ -109,6 +115,22 @@ public class Player : MonoBehaviour
         moveInput = new Vector3(horizontal, 0f, vertical).normalized;
         
     }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.tag == "Ground")
+        {
+            isGrounded = true;
+        }
+    }
+    
+    public void SetVelocity()
+    {
+        Vector3 velocity = moveDirection * speed;
+        velocity.y = rb.linearVelocity.y;
+        rb.linearVelocity = velocity;
+    }
+    
     
     
 }

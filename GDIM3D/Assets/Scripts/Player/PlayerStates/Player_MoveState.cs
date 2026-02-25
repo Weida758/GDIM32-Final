@@ -21,8 +21,6 @@ public class Player_MoveState : Player_GroundedState
     public override void FixedUpdate()
     {
         base.FixedUpdate();
-        Vector3 velocity = player.moveDirection * player.speed;
-        velocity.y = player.rb.linearVelocity.y;
-        player.rb.linearVelocity = velocity;
+        player.SetVelocity();
     }
 }
