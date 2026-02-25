@@ -1,6 +1,4 @@
-using UnityEditor.SceneManagement;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class Item : MonoBehaviour
 {

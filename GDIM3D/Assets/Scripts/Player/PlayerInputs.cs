@@ -8,6 +8,7 @@ public class PlayerInputs : MonoBehaviour
 
     private InputAction attackAction;
     private InputAction inventoryAction;
+    private InputAction jumpAction;
 
 
     [field: DisplayOnly] [field: SerializeField] public bool attacking { get; private set; }
@@ -15,6 +16,8 @@ public class PlayerInputs : MonoBehaviour
     [field: DisplayOnly]
     [field: SerializeField]
     public bool inventoryPressed { get; private set; }
+    public bool jumpButtonPressed { get; private set; }
+    
 
     private void Awake()
     {
@@ -24,6 +27,7 @@ public class PlayerInputs : MonoBehaviour
         
         attackAction = inputMap.FindAction("Attack");
         inventoryAction = inputMap.FindAction("Inventory");
+        jumpAction = inputMap.FindAction("Jump");
     }
 
     private void OnEnable()
@@ -35,6 +39,7 @@ public class PlayerInputs : MonoBehaviour
     {
         attacking = attackAction.WasPressedThisFrame();
         inventoryPressed = inventoryAction.WasPressedThisFrame();
+        jumpButtonPressed = jumpAction.WasPressedThisFrame();
     }
 
     private void OnDisable()
