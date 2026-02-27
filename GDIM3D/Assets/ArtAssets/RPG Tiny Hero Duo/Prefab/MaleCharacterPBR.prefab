@@ -90,6 +90,75 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &415504320149215405
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8993983429445037423}
+  - component: {fileID: 8362112595867182769}
+  - component: {fileID: 5517054745125470369}
+  m_Layer: 0
+  m_Name: GroundDetection
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8993983429445037423
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 415504320149215405}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.071, y: 0.069, z: 0.347}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8855052669661678444}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8362112595867182769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 415504320149215405}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0c52173ea982c149b3c5d607ed17d94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GroundDetection
+  player: {fileID: 7955291806314943171}
+--- !u!136 &5517054745125470369
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 415504320149215405}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.12959862
+  m_Height: 0.47286224
+  m_Direction: 0
+  m_Center: {x: -0.053466797, y: 0, z: -0.37040138}
 --- !u!1 &450382583515540062
 GameObject:
   m_ObjectHideFlags: 0
@@ -2455,6 +2524,7 @@ GameObject:
   - component: {fileID: 1746507308426776401}
   - component: {fileID: 2064173952504979032}
   - component: {fileID: 528948374351214658}
+  - component: {fileID: 7825579419121085100}
   m_Layer: 0
   m_Name: MaleCharacterPBR
   m_TagString: Player
@@ -2480,6 +2550,7 @@ Transform:
   - {fileID: 4052450133362360554}
   - {fileID: 4651028323595200166}
   - {fileID: 4682473949907222776}
+  - {fileID: 8993983429445037423}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &9036980633323257398
@@ -2544,10 +2615,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
   currentState: 
+  inventoryUI: {fileID: 0}
   <speed>k__BackingField: 5
   turnSpeed: 10
   hitboxOrigin: {fileID: 0}
+  isGrounded: 1
+  <jumpForce>k__BackingField: 200
   cam: {fileID: 0}
+  interactionRange: 3.5
+  raycastMaxDistance: 50
+  interactableMask:
+    serializedVersion: 2
+    m_Bits: 119
 --- !u!136 &1746507308426776401
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2555,7 +2634,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8189980434977739222}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: a46bb337f10a6a840bfa093267da1ab5, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -2584,6 +2663,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInputs
   <attacking>k__BackingField: 0
+  <inventoryPressed>k__BackingField: 0
 --- !u!114 &528948374351214658
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2598,6 +2678,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInventory
   slots: []
   inventorySize: 22
+--- !u!114 &7825579419121085100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8189980434977739222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 540c3b41bb0c00947b15eb594fd4d0bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HealthComponent
+  <maxHealth>k__BackingField: 100
+  <currentHealth>k__BackingField: 10
 --- !u!1 &8206070634150816031
 GameObject:
   m_ObjectHideFlags: 0

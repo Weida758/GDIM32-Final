@@ -1,12 +1,11 @@
 using UnityEngine;
 
 
-public class Player_JumpState : PlayerBaseState
+public class Player_JumpState : Player_AirState
 {
     public Player_JumpState(StateMachine stateMachine, string animBoolName, Player player) : 
-        base(stateMachine, animBoolName, player)
-    {
-    }
+    base(stateMachine, animBoolName, player)
+    { }
 
     public override void Enter()
     {

@@ -25,12 +25,15 @@ public class Player : MonoBehaviour
     [field: SerializeField] public float speed { get; private set; }
     [SerializeField] private float turnSpeed = 10f;
     [SerializeField] private Transform hitboxOrigin;
+    /// <summary> Whether the inventory panel is currently open. Used to toggle cursor lock and camera control. </summary>
     public bool inventoryOpened { get; private set; } = false;
     [DisplayOnly] public bool isGrounded = true;
 
     // -------- Movement -------------------
+    /// <summary> The camera-relative direction the player should move toward. Zero when there is no input. </summary>
     public Vector3 moveDirection { get; private set; }
     private float horizontal, vertical;
+    /// <summary> Raw movement input as a normalized vector (horizontal, 0, vertical). </summary>
     public Vector3 moveInput { get; private set; }
     [field: SerializeField] public float jumpForce { get; private set; }
     
@@ -43,11 +46,16 @@ public class Player : MonoBehaviour
     [SerializeField] private float interactionRange = 3.5f;
     [SerializeField] private float raycastMaxDistance = 50f;
     [SerializeField] private LayerMask interactableMask;
+    /// <summary> The item currently under the player's crosshair and within interaction range. Null if nothing is targeted. </summary>
     public Item targetedItem { get; private set; }
-
-
     public event Action OnInventoryOpen;
     public event Action OnInventoryClose;
+    
+    [Header("Ground Check")]
+    [SerializeField] private float groundCheckRadius = 0.25f;
+    [SerializeField] private float groundCheckOffset = 0.3f;
+    [SerializeField] private float groundCheckDistance = 0.4f;
+    [SerializeField] private LayerMask groundMask;
 
 
     private void Awake()
@@ -82,6 +90,7 @@ public class Player : MonoBehaviour
         currentState = stateMachine.currentState.ToString();
         HandleInput();
         GetCameraDirection();
+        CheckGround();
         stateMachine.UpdateActiveState();
 
         if (inputs.inventoryPressed)
@@ -107,25 +116,31 @@ public class Player : MonoBehaviour
         stateMachine.FixedUpdateActiveState();
     }
 
-    // Return the forward direction that the camera is facing, and rotate the player accordingly
+    // Converts raw input into a camera-relative move direction so the player
+    // moves relative to where the camera is facing rather than world axes.
+    // Also smoothly rotates the player model to face that direction.
+    // When there is no input, moveDirection is zeroed out so no residual
+    // movement carries over
     private void GetCameraDirection()
     {
-        // Run when there is movement input
         if (moveInput.magnitude >= 0.1f)
         {
             Vector3 camForward = cam.forward;
             Vector3 camRight = cam.right;
-            camForward.y = 0f; // strips out up and down from forward to get horizontal only directions
-            camRight.y = 0f; // strips out up and down to get horizontal only directions
+            camForward.y = 0f;
+            camRight.y = 0f;
             camForward.Normalize();
             camRight.Normalize();
 
             moveDirection = camForward * vertical + camRight * horizontal;
             moveDirection.Normalize();
 
-            // Smoothly rotate player to face movement direction
             Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, turnSpeed * 100f * Time.deltaTime);
+        }
+        else
+        {
+            moveDirection = Vector3.zero;
         }
     }
 
@@ -137,15 +152,12 @@ public class Player : MonoBehaviour
         moveInput = new Vector3(horizontal, 0f, vertical).normalized;
         
     }
-
-    private void OnCollisionEnter(Collision other)
-    {
-        if (other.gameObject.tag == "Ground")
-        {
-            isGrounded = true;
-        }
-    }
     
+    /// <summary>
+    /// Applies horizontal movement based on <see cref="moveDirection"/> and <see cref="speed"/>
+    /// while preserving the current vertical velocity (gravity / jump force).
+    /// Called from state FixedUpdate methods.
+    /// </summary>
     public void SetVelocity()
     {
         Vector3 velocity = moveDirection * speed;
@@ -153,6 +165,9 @@ public class Player : MonoBehaviour
         rb.linearVelocity = velocity;
     }
     
+    // Casts a ray from the screen center to detect interactable items.
+    // Only registers a hit if the item is within interactionRange of the player,
+    // preventing interaction with distant objects that happen to be under the crosshair.
     private void HandleInteraction()
     {
         targetedItem = null;
@@ -179,6 +194,30 @@ public class Player : MonoBehaviour
         {
             targetedItem.Collect(inventory);
         }
+    }
+
+    private void CheckGround()
+    {
+        Vector3 origin = transform.position + Vector3.up * groundCheckOffset;
+        isGrounded = Physics.SphereCast(origin, groundCheckRadius, Vector3.down, out _,
+            groundCheckDistance, groundMask);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Vector3 origin = transform.position + Vector3.up * groundCheckOffset;
+        Vector3 end = origin + Vector3.down * groundCheckDistance;
+
+        Gizmos.color = isGrounded ? Color.green : Color.red;
+
+        // Sphere at start of cast
+        Gizmos.DrawWireSphere(origin, groundCheckRadius);
+
+        // Sphere at end of cast
+        Gizmos.DrawWireSphere(end, groundCheckRadius);
+
+        // Line connecting them
+        Gizmos.DrawLine(origin, end);
     }
     
     

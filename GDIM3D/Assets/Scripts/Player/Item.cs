@@ -10,22 +10,12 @@ public class Item : MonoBehaviour
     [SerializeField] private float floatingRangeDown;
 
     private SpriteRenderer spriteRenderer;
+    private MeshRenderer meshRenderer;
     private PlayerInventory inventory;
     private Vector3 originalPosition;
     private Vector3 rotation = Vector3.zero;
     private bool playerWithinRange;
-
-
-
-    private void Awake()
-    {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        
-        if(spriteRenderer != null)
-        {
-            spriteRenderer.sprite = itemData.itemSprite;
-        }
-    }
+    
 
     private void Start()
     {
@@ -44,6 +34,7 @@ public class Item : MonoBehaviour
                 }
             }
         }
+        
         rotation += new Vector3(0f,  rotatingSpeed * Time.deltaTime, 0f);
         transform.rotation = Quaternion.Euler(rotation);
         if (transform.position.y > originalPosition.y + floatingRangeUp || 

@@ -9,8 +9,8 @@ public class Player_IdleState : Player_GroundedState
     public override void Enter()
     {
         base.Enter();
-        
-        player.rb.linearVelocity = Vector3.zero;
+
+        player.rb.linearVelocity = new Vector3(0f, player.rb.linearVelocity.y, 0f);
     }
 
 
