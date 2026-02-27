@@ -1,5 +1,6 @@
+using System;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class Player : MonoBehaviour
 {
     public StateMachine stateMachine { get; private set; }
@@ -18,12 +19,13 @@ public class Player : MonoBehaviour
     public Rigidbody rb { get; private set; }
     public HealthComponent healthComponent { get; private set; }
     [SerializeField] private GameObject inventoryUI;
+    private PlayerInventory inventory;
 
     // --------- Data -------------------
     [field: SerializeField] public float speed { get; private set; }
     [SerializeField] private float turnSpeed = 10f;
     [SerializeField] private Transform hitboxOrigin;
-    private bool inventoryOpened = false;
+    public bool inventoryOpened { get; private set; } = false;
     [DisplayOnly] public bool isGrounded = true;
 
     // -------- Movement -------------------
@@ -34,7 +36,18 @@ public class Player : MonoBehaviour
     
     public Transform cam;
     private OrbitCamera orbitCamera;
-    
+    private Camera mainCam;
+
+    // -------- Interaction -------------------
+    [Header("Interaction")]
+    [SerializeField] private float interactionRange = 3.5f;
+    [SerializeField] private float raycastMaxDistance = 50f;
+    [SerializeField] private LayerMask interactableMask;
+    public Item targetedItem { get; private set; }
+
+
+    public event Action OnInventoryOpen;
+    public event Action OnInventoryClose;
 
 
     private void Awake()
@@ -50,6 +63,8 @@ public class Player : MonoBehaviour
         fallState = new Player_FallState(stateMachine, "fall", this);
         
         healthComponent = GetComponent<HealthComponent>();
+        inventory = GetComponent<PlayerInventory>();
+        
     }
 
     private void Start()
@@ -57,6 +72,8 @@ public class Player : MonoBehaviour
         stateMachine.Initialize(idleState);
         Cursor.lockState = CursorLockMode.Locked;
         orbitCamera = FindFirstObjectByType<OrbitCamera>();
+        if (orbitCamera) mainCam = orbitCamera.GetComponent<Camera>();
+        else Debug.LogError("No Orbit camera");
     }
     
     
@@ -71,12 +88,17 @@ public class Player : MonoBehaviour
         {
             inventoryOpened = !inventoryOpened;
             inventoryUI.SetActive(inventoryOpened);
+            
+            if (inventoryOpened) OnInventoryOpen?.Invoke();
+            else OnInventoryClose?.Invoke();
+            
             Cursor.visible =  inventoryOpened;
             Cursor.lockState = inventoryOpened ? CursorLockMode.None : CursorLockMode.Locked;
             
             orbitCamera.enabled = !inventoryOpened;
         }
         
+        HandleInteraction();
 
     }
 
@@ -129,6 +151,34 @@ public class Player : MonoBehaviour
         Vector3 velocity = moveDirection * speed;
         velocity.y = rb.linearVelocity.y;
         rb.linearVelocity = velocity;
+    }
+    
+    private void HandleInteraction()
+    {
+        targetedItem = null;
+        
+        if (mainCam == null) return;
+        
+        Ray ray = mainCam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
+
+        if (Physics.Raycast(ray, out RaycastHit hit, raycastMaxDistance, interactableMask, QueryTriggerInteraction.Collide))
+        {
+            Item item = hit.collider.GetComponent<Item>();
+            
+            if (item != null)
+            {
+                float distanceToPlayer = Vector3.Distance(transform.position, item.transform.position);
+                if (distanceToPlayer <= interactionRange)
+                {
+                    targetedItem = item;
+                }
+            }
+        }
+
+        if (targetedItem != null && Input.GetMouseButtonDown(0))
+        {
+            targetedItem.Collect(inventory);
+        }
     }
     
     

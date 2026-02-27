@@ -80,6 +80,18 @@ public class Item : MonoBehaviour
         playerWithinRange = false;
     }
     
+    public bool Collect(PlayerInventory playerInventory)
+    {
+        if (playerInventory == null) return false;
+
+        if (playerInventory.TryAddItem(itemData, amount))
+        {
+            Destroy(gameObject);
+            return true;
+        }
+
+        return false;
+    }
 
 
 }

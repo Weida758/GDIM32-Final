@@ -21,6 +21,7 @@ public class Player_MoveState : Player_GroundedState
     public override void FixedUpdate()
     {
         base.FixedUpdate();
+        if (player.inventoryOpened) return;
         player.SetVelocity();
     }
 }
