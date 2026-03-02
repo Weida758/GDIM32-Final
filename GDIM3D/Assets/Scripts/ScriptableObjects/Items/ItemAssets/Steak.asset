@@ -15,7 +15,7 @@ MonoBehaviour:
   itemID: 1
   itemSprite: {fileID: 21300000, guid: 2d32f96b28dc0d9479129a87f6fcc318, type: 3}
   itemName: Steak
-  itemDescription: Heal for 30 health
+  itemDescription: 'Steak: \nHeal for 30 HP'
   maxStackSize: 20
   isStackable: 1
   itemEffects:

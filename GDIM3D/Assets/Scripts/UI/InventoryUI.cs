@@ -305,6 +305,7 @@ public class InventoryUI : MonoBehaviour
         draggedSlot = null;
     }
     
+    
     public void OnConsumeItem()
     {
         inventory.ConsumeItem(contextSlotIndex);
