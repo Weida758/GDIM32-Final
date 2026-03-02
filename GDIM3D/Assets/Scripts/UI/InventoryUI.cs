@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 
-public class InventoryUI : MonoBehaviour, IPointerClickHandler
+public class InventoryUI : MonoBehaviour
 {
 
     public PlayerInventory inventory;
@@ -12,6 +12,9 @@ public class InventoryUI : MonoBehaviour, IPointerClickHandler
 
     public Image dragIcon;
     public TextMeshProUGUI dragQuantityText;
+    public GameObject itemDescriptionPanel;
+    public TextMeshProUGUI itemDescriptionText;
+    [SerializeField] private Vector3 descriptionPanelPositionOffset;
 
     // --------------- Picking -----------------
     [HideInInspector] public InventorySlotUI draggedSlot;
@@ -48,7 +51,6 @@ public class InventoryUI : MonoBehaviour, IPointerClickHandler
     private void Start()
     {
         inventory = FindFirstObjectByType<PlayerInventory>();
-
         for (int i = 0; i < slotUis.Length; i++)
         {
             slotUis[i].inventoryUI = this;
@@ -60,9 +62,7 @@ public class InventoryUI : MonoBehaviour, IPointerClickHandler
 
     private void OnEnable()
     {
-        
         inventory.OnInventoryChanged += Refresh;
-        
     }
 
     private void OnDisable()
@@ -106,6 +106,11 @@ public class InventoryUI : MonoBehaviour, IPointerClickHandler
         if (isHoldingRightClick && Input.GetMouseButtonUp(1))
         {
             isHoldingRightClick = false;
+        }
+
+        if (itemDescriptionPanel.activeSelf)
+        {
+            itemDescriptionPanel.transform.position = Input.mousePosition + descriptionPanelPositionOffset;
         }
         
     }
@@ -314,11 +319,6 @@ public class InventoryUI : MonoBehaviour, IPointerClickHandler
     public void OnDropAll()
     {
         inventory.DropItem(contextSlotIndex, inventory.slots[contextSlotIndex].quantity);
-        
-    }
-
-    public void OnPointerClick(PointerEventData eventData)
-    {
         
     }
 }

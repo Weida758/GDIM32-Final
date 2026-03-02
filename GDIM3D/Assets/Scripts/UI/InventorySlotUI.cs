@@ -20,8 +20,7 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
     private void Update()
     {
-        if (!isHovering) return;
-        if (Input.GetKeyDown(KeyCode.T))
+        if (isHovering && Input.GetKeyDown(KeyCode.T))
         {
             inventoryUI.inventory.ConsumeItem(slotIndex);
         }
@@ -93,11 +92,20 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     public void OnPointerEnter(PointerEventData eventData)
     {
         isHovering = true;
+        if (slotData != null && !slotData.isSlotEmpty)
+        {
+            inventoryUI.itemDescriptionText.text = slotData.item.itemDescription;
+            inventoryUI.itemDescriptionPanel.SetActive(true);
+            Debug.Log("Slot #" +  slotIndex + " is being hovered");
+
+        }
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         isHovering = false;
+        inventoryUI.itemDescriptionPanel.SetActive(false);
+        Debug.Log("Slot #" + slotIndex + " is not being hovered now");
     }
 
     public void OnPointerDown(PointerEventData eventData)
