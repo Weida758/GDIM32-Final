@@ -106,6 +106,11 @@ public class Player : MonoBehaviour
             
             orbitCamera.enabled = !inventoryOpened;
         }
+
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            healthComponent.Take20Damage();
+        }
         
         HandleInteraction();
 
