@@ -1,11 +1,16 @@
 # GDIM32-Final
 ## Check-In
 ### Weida Chen
-Put your individual check-in Devlog here.
+Written all of the scripts so far. I found our proposal to be detailed enough for constructing our project as of now, since I haven't found myself to need to really add on to the proposal at all, and that most of the features are clearly layed out for me to implement. I've used all of the architecture plans in actually building the project, so not much has changed for that either. For example, I was using the MVC model to implement the inventory, where you have the internal inventory for the player that contains data only, and an inventoryUI which displays those internal data via API that communicate with the data. I created a locator singleton which contains the player reference, where the HealthUI subscribes UpdateHealth to the OnHealthChanged event from the player. I also utilized the statemachine patterns to create abstract superstates and states for the player movement, and plan to create attack behaviours as well as enemy AI with the pattern in the future as well. We used a google doc to keep us on track based on the week number, and make progress based on the task assignments. 
 ### Team Member Name 2
 Put your individual check-in Devlog here.
 ### Team Member Name 3
 Put your individual check-in Devlog here.
+
+
+### Group Devlog
+Prompt B: We used spherecasting in order to check for whether the player is on the ground or not, and if not, then the player should not be able to jump. We needed to use spherecasting for this feature because we felt like raycasting isn't a good solution for 3D models checking grounded state, when previously it was good for the same feature in a 2D game, simply because the ray cannot capture the whole player's capsule collider position. We have the sphere cast straight down from the player center origin + some Vector3.up offset, and if it hits the ground within a specified distance, then the player's isGrounded value is set to true, and false otherwise. Other than the spherecast, we also used raycast for the point and click intereaction we have with items. We create a ray from the center of the camera using 'mainCam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f)', and if the Raycast using that ray hits an interactable object within a specified range, the player is able to click and collect the item, and store it into the inventory. 
+
 
 
 ## Final Submission
