@@ -9,9 +9,6 @@ public class HealthUI : MonoBehaviour
     private void Start()
     {
         UpdateHealth();
-    }
-    private void OnEnable()
-    {
         Locator.instance.player.healthComponent.OnHealthChanged += UpdateHealth;
     }
 

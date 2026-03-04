@@ -17,7 +17,7 @@ public class Player : MonoBehaviour
     // --------- Components -------------
     public Animator animator { get; private set; }
     public Rigidbody rb { get; private set; }
-    public HealthComponent healthComponent { get; private set; }
+    [field: SerializeField] public HealthComponent healthComponent { get; private set; }
     [SerializeField] private GameObject inventoryUI;
     private PlayerInventory inventory;
 
@@ -70,7 +70,6 @@ public class Player : MonoBehaviour
         jumpState = new Player_JumpState(stateMachine, "jump", this);
         fallState = new Player_FallState(stateMachine, "fall", this);
         
-        healthComponent = GetComponent<HealthComponent>();
         inventory = GetComponent<PlayerInventory>();
         
     }
