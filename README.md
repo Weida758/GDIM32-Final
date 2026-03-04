@@ -9,8 +9,8 @@ The most signicant aspect that I've contributed to this project is the creation 
 The most signficant part that I have contributed to this project was the creation of  the map design with the implmetation of future scnerary into the map. For example I added particle system which is going to be used for a more proper immersion for lighting, right now the placeholder for it is a defualt particle system with some minor tweaks however with a shader implemented its going to have that fire effect later. Although each of us have made a seperate scene in my scene I added more structured paths as well through the use of tilemaps creating a dirt layer and details like a gameobject for terrianField which gives a crop like look for the place. With the proposal so far from week 7 it has been useful in the sense of where Ill potentially add details in the map ensuring that I wont go off topic. My archetiture design has changed since it looks like were going to be making a small map. Tool we used was a googledoc to keep track of progress.Ill plan to refine my particle system and improve the map itself. Additionally other things added were gameobjects like a well with lighting effects, bulding gameobjects for immersion and detail. 
 
 
-### Team Member Name 3
-Put your individual check-in Devlog here.
+### Lillian Su
+My most significant contribution up until now is in finding character, character animation, item, environment, music, and UI 3D assets. I've uploaded these to our game and organized the items in folders. Additionally, I've organized our Final tasks document on google docs to keep track of our progress and tasks for each week. In order to keep myself organized, I've noted tasks for each week to complete and planned for future tasks I will do. From now, I hope to add the sound effects that correlate to the movements the player makes as well as the background music to alter depending on the environment/situation the player is in.
 
 
 ### Group Devlog

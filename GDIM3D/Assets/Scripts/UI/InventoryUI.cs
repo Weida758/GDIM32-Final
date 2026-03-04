@@ -50,7 +50,9 @@ public class InventoryUI : MonoBehaviour
 
     private void Start()
     {
+        Locator.instance.player.OnInventoryClose += DisableItemDescription;
         inventory = FindFirstObjectByType<PlayerInventory>();
+        
         for (int i = 0; i < slotUis.Length; i++)
         {
             slotUis[i].inventoryUI = this;
@@ -58,6 +60,7 @@ public class InventoryUI : MonoBehaviour
         }
 
         Refresh();
+        
     }
 
     private void OnEnable()
@@ -303,6 +306,16 @@ public class InventoryUI : MonoBehaviour
     {
         dragIcon.enabled = false;
         draggedSlot = null;
+    }
+
+    public void EnableItemDescription()
+    {
+        itemDescriptionPanel.SetActive(true);
+    }
+
+    public void DisableItemDescription()
+    {
+        itemDescriptionPanel.SetActive(false);
     }
     
     
