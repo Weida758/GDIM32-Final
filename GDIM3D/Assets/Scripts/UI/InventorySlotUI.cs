@@ -95,7 +95,7 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         if (slotData != null && !slotData.isSlotEmpty)
         {
             inventoryUI.itemDescriptionText.text = slotData.item.itemDescription;
-            inventoryUI.itemDescriptionPanel.SetActive(true);
+            inventoryUI.EnableItemDescription();
             Debug.Log("Slot #" +  slotIndex + " is being hovered");
 
         }
@@ -104,7 +104,7 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     public void OnPointerExit(PointerEventData eventData)
     {
         isHovering = false;
-        inventoryUI.itemDescriptionPanel.SetActive(false);
+        inventoryUI.DisableItemDescription();
         Debug.Log("Slot #" + slotIndex + " is not being hovered now");
     }
 
