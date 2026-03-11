@@ -14,11 +14,13 @@ public class Player : MonoBehaviour
     public Player_MoveState moveState { get; private set; }
     public Player_JumpState jumpState { get; private set; }
     public Player_FallState fallState { get; private set; }
+    public Player_AttackState attackState  { get; private set; }
 
     // --------- Components -------------
     public Animator animator { get; private set; }
     public Rigidbody rb { get; private set; }
     [field: SerializeField] public HealthComponent healthComponent { get; private set; }
+    [field: SerializeField] public WeaponComponent weaponComponent { get; private set; }
     [SerializeField] private GameObject inventoryUI;
     private PlayerInventory inventory;
 
@@ -75,6 +77,7 @@ public class Player : MonoBehaviour
         moveState = new Player_MoveState(stateMachine, "move", this);
         jumpState = new Player_JumpState(stateMachine, "jump", this);
         fallState = new Player_FallState(stateMachine, "fall", this);
+        attackState = new Player_AttackState(stateMachine, "attack", this);
         
         inventory = GetComponent<PlayerInventory>();
         

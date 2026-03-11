@@ -14,7 +14,6 @@ public class PlayerBaseState : CharacterBaseState
     public override void Enter()
     {
         base.Enter();
-        
         player.animator.SetBool(animBoolName, true);
     }
 
@@ -30,4 +29,6 @@ public class PlayerBaseState : CharacterBaseState
         base.Exit();
         player.animator.SetBool(animBoolName, false);
     }
+
+    
 }

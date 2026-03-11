@@ -4,6 +4,7 @@ public class CharacterBaseState
 {
     protected StateMachine stateMachine;
     protected string animBoolName;
+    public bool animationTriggerCalled;
 
     public CharacterBaseState(StateMachine stateMachine, string animBoolName)
     {
@@ -13,7 +14,7 @@ public class CharacterBaseState
 
     public virtual void Enter()
     {
-        
+        animationTriggerCalled = false;
     }
 
     public virtual void Exit()
@@ -29,6 +30,12 @@ public class CharacterBaseState
     public virtual void Update()
     {
         
+    }
+    
+    public void CallAnimationTrigger()
+    {
+        animationTriggerCalled = true;
+        Debug.Log("animation trigger called");
     }
     
 }
