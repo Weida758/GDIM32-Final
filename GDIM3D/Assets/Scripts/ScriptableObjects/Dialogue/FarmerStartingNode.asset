@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce1bb646703914a4da447f425279bc73, type: 3}
+  m_Name: FarmerStartingNode
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueNode
+  _lines:
+  - What's up bro
+  - You are so cool
+  npc: {fileID: 11400000, guid: 6165f3d3174910c499db7a1126ae0d83, type: 2}
+  _playerReplyOptions:
+  - Thank you!
+  _npcReplies:
+  - {fileID: 11400000, guid: 4da5bafb670010640b82187c42144a8f, type: 2}

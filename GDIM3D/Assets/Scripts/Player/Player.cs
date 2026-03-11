@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+
 public class Player : MonoBehaviour
 {
     public StateMachine stateMachine { get; private set; }
@@ -48,6 +49,8 @@ public class Player : MonoBehaviour
     [SerializeField] private LayerMask interactableMask;
     /// <summary> The item currently under the player's crosshair and within interaction range. Null if nothing is targeted. </summary>
     public Item targetedItem { get; private set; }
+    /// <summary> The NPC currently under the player's crosshair and within interaction range. Null if nothing is targeted. </summary>
+    public NPCDialogue targetedNPC { get; private set; }
     public event Action OnInventoryOpen;
     public event Action OnInventoryClose;
     
@@ -56,6 +59,9 @@ public class Player : MonoBehaviour
     [SerializeField] private float groundCheckOffset = 0.3f;
     [SerializeField] private float groundCheckDistance = 0.4f;
     [SerializeField] private LayerMask groundMask;
+    
+    // -------- Dialogue -------------------
+    private DialogueSystem dialogueSystem;
 
 
     private void Awake()
@@ -81,12 +87,35 @@ public class Player : MonoBehaviour
         orbitCamera = FindFirstObjectByType<OrbitCamera>();
         if (orbitCamera) mainCam = orbitCamera.GetComponent<Camera>();
         else Debug.LogError("No Orbit camera");
+
+        dialogueSystem = FindFirstObjectByType<DialogueSystem>();
     }
     
     
     private void Update()
     {
         currentState = stateMachine.currentState.ToString();
+        
+        // Block all gameplay input while dialogue is active
+        if (dialogueSystem != null && dialogueSystem.IsDialogueActive)
+        {
+            moveInput = Vector3.zero;
+            moveDirection = Vector3.zero;
+            horizontal = 0f;
+            vertical = 0f;
+            targetedItem = null;
+            targetedNPC = null;
+
+            if (stateMachine.currentState != idleState)
+            {
+                stateMachine.ChangeState(idleState);
+            }
+
+            animator.SetFloat("magnitude", 0f);
+
+            return;
+        }
+        
         HandleInput();
         GetCameraDirection();
         CheckGround();
@@ -117,6 +146,9 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
+        // Don't update state machine physics during dialogue
+        if (dialogueSystem != null && dialogueSystem.IsDialogueActive) return;
+        
         stateMachine.FixedUpdateActiveState();
     }
 
@@ -169,12 +201,13 @@ public class Player : MonoBehaviour
         rb.linearVelocity = velocity;
     }
     
-    // Casts a ray from the screen center to detect interactable items.
-    // Only registers a hit if the item is within interactionRange of the player,
+    // Casts a ray from the screen center to detect interactable items and NPCs.
+    // Only registers a hit if the object is within interactionRange of the player,
     // preventing interaction with distant objects that happen to be under the crosshair.
     private void HandleInteraction()
     {
         targetedItem = null;
+        targetedNPC = null;
         
         if (mainCam == null) return;
         
@@ -182,21 +215,38 @@ public class Player : MonoBehaviour
 
         if (Physics.Raycast(ray, out RaycastHit hit, raycastMaxDistance, interactableMask, QueryTriggerInteraction.Collide))
         {
-            Item item = hit.collider.GetComponent<Item>();
+            float distanceToPlayer = Vector3.Distance(transform.position, hit.collider.transform.position);
             
-            if (item != null)
+            if (distanceToPlayer <= interactionRange)
             {
-                float distanceToPlayer = Vector3.Distance(transform.position, item.transform.position);
-                if (distanceToPlayer <= interactionRange)
+                // Check for Item
+                Item item = hit.collider.GetComponent<Item>();
+                if (item != null)
                 {
                     targetedItem = item;
                 }
+                
+                NPCDialogue npc = hit.collider.GetComponent<NPCDialogue>();
+
+                if (npc != null)
+                {
+                    targetedNPC = npc;
+                }
             }
         }
-
-        if (targetedItem != null && Input.GetMouseButtonDown(0))
+        
+        if (Input.GetMouseButtonDown(0))
         {
-            targetedItem.Collect(inventory);
+            if (targetedNPC != null)
+            {
+                dialogueSystem.StartDialogue(targetedNPC.npcData, targetedNPC.startingNode);
+                return;
+            }
+            
+            if (targetedItem != null)
+            {
+                targetedItem.Collect(inventory);
+            }
         }
     }
 

@@ -15,9 +15,12 @@ public class CrosshairUI : MonoBehaviour
     private RectTransform crosshairRect;
     private bool crosshairEnabled = true;
 
+    private DialogueSystem dialogueSystem;
+
     private void Start()
     {
         crosshairRect = crosshairImage.GetComponent<RectTransform>();
+        dialogueSystem = FindFirstObjectByType<DialogueSystem>();
     }
 
     private void OnEnable()
@@ -34,8 +37,15 @@ public class CrosshairUI : MonoBehaviour
 
     private void Update()
     {
-        crosshairImage.enabled = crosshairEnabled;
-        bool hasTarget = player != null && player.targetedItem != null;
+        // Hide crosshair during dialogue or inventory
+        bool shouldHide = !crosshairEnabled 
+                          || (dialogueSystem != null && dialogueSystem.IsDialogueActive);
+        crosshairImage.enabled = !shouldHide;
+        
+        if (shouldHide) return;
+
+        bool hasTarget = player != null 
+                         && (player.targetedItem != null || player.targetedNPC != null);
 
         Color goalColor = hasTarget ? targetColor : defaultColor;
         float goalSize = hasTarget ? targetSize : defaultSize;
