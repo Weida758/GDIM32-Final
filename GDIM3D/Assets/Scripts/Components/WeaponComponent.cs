@@ -10,6 +10,7 @@ public class WeaponComponent : MonoBehaviour
     [SerializeField] private float attackRadius;
     [SerializeField] private LayerMask enemyLayer;
     private Collider[] attackedCollidersBuffer = new Collider[20];
+    public bool isAttacking { get; private set; }
     
 
     private void Awake()
@@ -17,10 +18,12 @@ public class WeaponComponent : MonoBehaviour
         _currentAttackCooldown = attackCooldown;
     }
 
-    public void Attack(float value)
+    public void Attack()
     {
-
+        
         if (_currentAttackCooldown > 0) return;
+        isAttacking = true;
+        Debug.Log("I am Attacking");
         
         int hitAmount = Physics.OverlapSphereNonAlloc(hitboxOrigin.position, attackRadius,
             attackedCollidersBuffer, enemyLayer);
@@ -31,11 +34,18 @@ public class WeaponComponent : MonoBehaviour
                 attackedCollidersBuffer[i].GetComponent<HealthComponent>();
             if (healthComponent)
             {
-                healthComponent.TakeDamage(value);
+                healthComponent.TakeDamage(attackPower);
             }
 
             _currentAttackCooldown = attackCooldown;
         }
+
+        isAttacking = false;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawSphere(hitboxOrigin.transform.position, attackRadius);
     }
 
     private void Update()
