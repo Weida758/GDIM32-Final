@@ -12,9 +12,16 @@ public class Player_GroundedState : PlayerBaseState
     {
         base.Update();
 
+        if (player.inputs.attacking)
+        {
+            player.stateMachine.ChangeState(player.attackState);
+            return;
+        }
+
         if (player.inputs.jumpButtonPressed && player.isGrounded)
         {
             player.stateMachine.ChangeState(player.jumpState);
+            return;
         }
     }
 }
