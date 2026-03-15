@@ -27,8 +27,8 @@ Put your group Devlog here.
 Put your individual final Devlog here.
 ### Team Member Name 2
 Put your individual final Devlog here.
-### Team Member Name 3
-Put your individual final Devlog here.
+### Lillian Su
+Since the check-in, I have contributed to creating the dialogue between the player and the merchant NPC and the player and the farmer NPC. I inputed separate nodes for the lines of dialogue in a manner that branches conversation, giving the player freedom of choice. I've also added more item assets for the player to collect. Each item uploaded also has been attached an effect it will do to the player, like healing or strength.
 
 ## Open-Source Assets
 - [2D Food Icons](https://henrysoftware.itch.io/pixel-food) - Pixel sprite for items and food in inventory.
