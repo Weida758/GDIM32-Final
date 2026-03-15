@@ -10,12 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ce1bb646703914a4da447f425279bc73, type: 3}
-  m_Name: FarmerStartingNode
+  m_Name: FarmerNode3
   m_EditorClassIdentifier: Assembly-CSharp::DialogueNode
   _lines:
-  - 'Hello traveler, I need your help! I will provide you gold for such services. '
-  npc: {fileID: 11400000, guid: 6165f3d3174910c499db7a1126ae0d83, type: 2}
-  _playerReplyOptions:
-  - "Okay I\u2019m listening!"
-  _npcReplies:
-  - {fileID: 11400000, guid: 4da5bafb670010640b82187c42144a8f, type: 2}
+  - "Thanks. I\u2019ll be waiting and will give you 10 gold in return! "
+  npc: {fileID: 0}
+  _playerReplyOptions: []
+  _npcReplies: []
