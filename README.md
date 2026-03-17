@@ -38,4 +38,7 @@ Since the check-in, I have contributed to creating the dialogue between the play
 - [Medieval GUI](https://assetstore.unity.com/packages/2d/gui/icons/gui-parts-159068) - The assets used for the inventory and health bar UI 
 - [3D Hero Asset](https://assetstore.unity.com/packages/3d/characters/humanoids/rpg-tiny-hero-duo-pbr-polyart-225148) - The 3D asset used to represent our playable character
 - [Medieval Background Music](https://pixabay.com/music/main-title-medieval-background-351307/) - The normal background music played throughout the game
-- [Simple Low Poly Nature Pack](https://assetstore.unity.com/packages/3d/environments/landscapes/simple-low-poly-nature-pack-157552) - This was used to add some designs into the ground for example lighting like bonfires, some trees in a duplicate scene, decorative designs 
+- [Simple Low Poly Nature Pack](https://assetstore.unity.com/packages/3d/environments/landscapes/simple-low-poly-nature-pack-157552) - This was used to add some designs into the ground for example lighting like bonfires, some trees in a duplicate scene, decorative designs
+- [Start Menu music](https://pixabay.com/music/upbeat-the-tournament-280277/) - This was used for the background music of the start menu
+- [Collect Item Sound effect](https://cyrex-studios.itch.io/universal-ui-soundpack) - This is used for the item collecting sound.
+- [3D NPC asset](https://assetstore.unity.com/packages/3d/characters/humanoids/low-poly-character-pack-357288) - This was used for the apearance of the merchant NPC in our game
