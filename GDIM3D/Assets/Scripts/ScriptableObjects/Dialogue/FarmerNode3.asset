@@ -17,3 +17,5 @@ MonoBehaviour:
   npc: {fileID: 0}
   _playerReplyOptions: []
   _npcReplies: []
+  questAction: 1
+  questReference: {fileID: 11400000, guid: 6793a9df73fc35f4dab7598257fbf03b, type: 2}
