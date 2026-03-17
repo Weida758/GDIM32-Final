@@ -23,8 +23,8 @@ Prompt B: We used spherecasting in order to check for whether the player is on t
 Put your group Devlog here.
 
 
-### Team Member Name 1
-Put your individual final Devlog here.
+### Weida Chen
+The main contribution that I have made towards the project since the check in was the scalable quest system. I created a QuestManager that tracks quest progress and a QuestGiver component that we can put on a NPC, which will allow the NPC to give dialogues based on the various different states of the quest (haven't accepted quest yet, in progress, met the requirements, and completed already). Quests are defined as SO_Quest scriptable objects where we can set the objectives, required items, and gold reward. The system will automatically check the player's inventory everytime it changes so that the quest's progress can be updated and the player will be able to see it via quest tracking UI. I modified DialogueNode and DialogueSystem so that specific dialogue nodes can trigger accepting or completing a quest, all of which can be done through the inspector. For the UI, I built a quest tracker that can show the currently tracked quest and the player's progress towards completing it. I also created a quest journal menu that will lists all the active and completed quests, where you can also click on them to show more details about the quest. 
 ### Leandro Lopez Ramirez 
 following the check-in I have contributed to making the map further in detail for example I did changes around the map adding addtional tilemaps around the map, added more lighting effects into the map, more gameobjects  for example I added rocks as a decrative design, mountain like gameobject near the ground to add further detail. 
 ### Lillian Su
