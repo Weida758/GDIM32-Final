@@ -25,8 +25,8 @@ Put your group Devlog here.
 
 ### Team Member Name 1
 Put your individual final Devlog here.
-### Team Member Name 2
-Put your individual final Devlog here.
+### Leandro Lopez Ramirez 
+following the check-in I have contributed to making the map further in detail for example I did changes around the map adding addtional tilemaps around the map, added more lighting effects into the map, more gameobjects  for example I added rocks as a decrative design, mountain like gameobject near the ground to add further detail. 
 ### Lillian Su
 Since the check-in, I have contributed to creating the dialogue between the player and the merchant NPC and the player and the farmer NPC. I inputed separate nodes for the lines of dialogue in a manner that branches conversation, giving the player freedom of choice. I've also added more item assets for the player to collect. Each item uploaded also has been attached an effect it will do to the player, like healing or strength.
 
@@ -38,3 +38,4 @@ Since the check-in, I have contributed to creating the dialogue between the play
 - [Medieval GUI](https://assetstore.unity.com/packages/2d/gui/icons/gui-parts-159068) - The assets used for the inventory and health bar UI 
 - [3D Hero Asset](https://assetstore.unity.com/packages/3d/characters/humanoids/rpg-tiny-hero-duo-pbr-polyart-225148) - The 3D asset used to represent our playable character
 - [Medieval Background Music](https://pixabay.com/music/main-title-medieval-background-351307/) - The normal background music played throughout the game
+- [Simple Low Poly Nature Pack](https://assetstore.unity.com/packages/3d/environments/landscapes/simple-low-poly-nature-pack-157552) - This was used to add some designs into the ground for example lighting like bonfires, some trees in a duplicate scene, decorative designs 
