@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using System;
 public class DialogueSystem : MonoBehaviour
 {
     [SerializeField] private DialogueUI dialogueUI;
@@ -9,6 +9,11 @@ public class DialogueSystem : MonoBehaviour
     private int lineIndex;
 
     public bool IsDialogueActive { get; private set; }
+
+    /// <summary>
+    /// The event when a dialogue ends, passes the last node that was active as the argument.
+    /// </summary>
+    public event Action<DialogueNode> OnDialogueEnded;
 
     private OrbitCamera orbitCamera;
 
@@ -35,6 +40,8 @@ public class DialogueSystem : MonoBehaviour
 
         dialogueUI.gameObject.SetActive(true);
         dialogueUI.Initialize(this);
+
+        ProcessQuestAction(currentNode);
         ShowNextLine();
     }
 
@@ -52,12 +59,14 @@ public class DialogueSystem : MonoBehaviour
         }
         else
         {
+            // All NPC lines for this node is complete
             if (currentNode._playerReplyOptions != null && currentNode._playerReplyOptions.Length > 0)
             {
                 dialogueUI.ShowPlayerOptions(currentNode._playerReplyOptions);
             }
             else
             {
+                // End dialogue when no player choice
                 EndDialogue();
             }
         }
@@ -95,6 +104,8 @@ public class DialogueSystem : MonoBehaviour
 
         currentNode = nextNode;
         lineIndex = 0;
+        
+        ProcessQuestAction(currentNode);
 
         // New node has NPC lines
         if (currentNode._lines != null && currentNode._lines.Length > 0)
@@ -112,9 +123,14 @@ public class DialogueSystem : MonoBehaviour
             EndDialogue();
         }
     }
-
+    
+    /// <summary>
+    /// On the final node traversed, end the dialogue
+    /// </summary>
     public void EndDialogue()
     {
+        DialogueNode lastNode = currentNode;
+        
         IsDialogueActive = false;
         currentNode = null;
         currentNPC = null;
@@ -124,6 +140,8 @@ public class DialogueSystem : MonoBehaviour
         dialogueUI.gameObject.SetActive(false);
 
         SetPlayerControlsEnabled(true);
+        
+        OnDialogueEnded?.Invoke(lastNode);
     }
 
     private void SetPlayerControlsEnabled(bool enabled)
@@ -133,5 +151,34 @@ public class DialogueSystem : MonoBehaviour
 
         Cursor.visible = !enabled;
         Cursor.lockState = enabled ? CursorLockMode.Locked : CursorLockMode.None;
+    }
+    /// <summary>
+    /// Execute the quest action associated with the dialogue node, if any
+    /// </summary>
+    /// <param name="node"></param>
+    private void ProcessQuestAction(DialogueNode node)
+    {
+        if (node == null || node.questAction == QuestAction.None || node.questReference == null)
+        {
+            return;
+        }
+
+        var questManager = QuestManager.instance;
+        if (questManager == null)
+        {
+            Debug.LogWarning("DialogueSystem's QuestManager not found, can't process quest action");
+            return;
+        }
+
+        switch (node.questAction)
+        {
+            case QuestAction.AcceptQuest:
+                questManager.AcceptQuest(node.questReference);
+                break;
+            
+            case QuestAction.CompleteQuest :
+                questManager.CompleteQuest(node.questReference);
+                break;
+        }
     }
 }

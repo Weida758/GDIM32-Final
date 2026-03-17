@@ -5,7 +5,7 @@ public enum QuestStatus
     NotStarted,
     Active,
     ReadyToTurnIn,
-    Complete
+    Completed
 }
 
 /// <summary>
