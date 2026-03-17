@@ -26,7 +26,7 @@ Put your group Devlog here.
 ### Team Member Name 1
 Put your individual final Devlog here.
 ### Leandro Lopez Ramirez 
-following the check-in I have contributed to making the map further in detail for example I did changes around the map adding addtional tilemaps around the map, added more lighting effects into the map 
+following the check-in I have contributed to making the map further in detail for example I did changes around the map adding addtional tilemaps around the map, added more lighting effects into the map, more gameobjects  for example I added rocks as a decrative design, mountain like gameobject near the ground to add further detail. 
 ### Lillian Su
 Since the check-in, I have contributed to creating the dialogue between the player and the merchant NPC and the player and the farmer NPC. I inputed separate nodes for the lines of dialogue in a manner that branches conversation, giving the player freedom of choice. I've also added more item assets for the player to collect. Each item uploaded also has been attached an effect it will do to the player, like healing or strength.
 
