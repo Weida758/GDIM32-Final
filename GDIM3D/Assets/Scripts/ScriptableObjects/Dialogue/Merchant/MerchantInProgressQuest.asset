@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DialogueNode
   _lines:
   - Have you found those slimes yet?
-  - I still need 5 raw slimes for the stew. Please hurry, my mother isn't doing well...
+  - I still need 3 slimes for the stew. Please hurry, my mother isn't doing well...
   npc: {fileID: 0}
   _playerReplyOptions:
   - I'm working on it, I'll be back soon

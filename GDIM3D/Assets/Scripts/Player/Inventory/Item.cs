@@ -8,7 +8,9 @@ public class Item : MonoBehaviour
     [SerializeField] private float floatingSpeed;
     [SerializeField] private float floatingRangeUp;
     [SerializeField] private float floatingRangeDown;
-
+    [SerializeField] private AudioClip pickupSound;
+    [SerializeField] private float pickupVolume = 1f;
+    
     private SpriteRenderer spriteRenderer;
     private MeshRenderer meshRenderer;
     private PlayerInventory inventory;
@@ -77,6 +79,8 @@ public class Item : MonoBehaviour
 
         if (playerInventory.TryAddItem(itemData, amount))
         {
+            if (pickupSound != null)
+                AudioSource.PlayClipAtPoint(pickupSound, transform.position, pickupVolume);
             Destroy(gameObject);
             return true;
         }

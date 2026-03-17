@@ -17,8 +17,7 @@ MonoBehaviour:
     1 honey from the forest around this cabin.
   npc: {fileID: 11400000, guid: 6165f3d3174910c499db7a1126ae0d83, type: 2}
   _playerReplyOptions:
-  - 'Ok! I will go gather apples and honey from this forest, and return once I have
-    5 of each! '
+  - Ok! I will go gather apples and honey from this forest
   - No, I need some time to prepare.
   _npcReplies:
   - {fileID: 11400000, guid: 7fe1f3cdb83bb4d4db410ac24ae20580, type: 2}

@@ -53,6 +53,8 @@ MonoBehaviour:
   floatingSpeed: 0.2
   floatingRangeUp: 0.3
   floatingRangeDown: 0.3
+  pickupSound: {fileID: 8300000, guid: 33c94a164daf9437da256ce03c57c109, type: 3}
+  pickupVolume: 1
 --- !u!135 &8944285314035419248
 SphereCollider:
   m_ObjectHideFlags: 0

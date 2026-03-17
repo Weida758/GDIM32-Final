@@ -13,10 +13,12 @@ MonoBehaviour:
   m_Name: MerchantQuest2
   m_EditorClassIdentifier: Assembly-CSharp::DialogueNode
   _lines:
-  - "I\u2019ll give you gold in return for helping me acquire the 5 raw slimes I
-    need for this slime stew! You will need to defeat the Slime enemies to get them!"
+  - "I\u2019ll give you gold in return for helping me acquire the 3 raw slimes I
+    need for this slime stew! You can them around here"
   npc: {fileID: 0}
   _playerReplyOptions:
-  - 'Ok! I will defeat 5 Slimes and return with the dropped loot! '
+  - Ok, I will go gather slimes from around here
   _npcReplies:
   - {fileID: 11400000, guid: 857eb79a252444994a3a191f97845cfa, type: 2}
+  questAction: 0
+  questReference: {fileID: 0}
