@@ -26,7 +26,7 @@ public class Player : MonoBehaviour
 
     // --------- Data -------------------
     [field: SerializeField] public float speed { get; private set; }
-    [SerializeField] private float turnSpeed = 10f;
+    [SerializeField] private float turnSpeed = 7f;
     [SerializeField] private Transform hitboxOrigin;
     /// <summary> Whether the inventory panel is currently open. Used to toggle cursor lock and camera control. </summary>
     public bool inventoryOpened { get; private set; } = false;
@@ -64,6 +64,10 @@ public class Player : MonoBehaviour
     
     // -------- Dialogue -------------------
     private DialogueSystem dialogueSystem;
+    
+    // ---------- Quest Menu --------------
+    [SerializeField] private GameObject questMenuUI;
+    private bool questMenuOpened = false;
 
 
     private void Awake()
@@ -92,6 +96,11 @@ public class Player : MonoBehaviour
         else Debug.LogError("No Orbit camera");
 
         dialogueSystem = FindFirstObjectByType<DialogueSystem>();
+        
+        if (questMenuUI != null)
+        {
+            questMenuUI.SetActive(false);
+        }
     }
     
     
@@ -136,6 +145,16 @@ public class Player : MonoBehaviour
             Cursor.lockState = inventoryOpened ? CursorLockMode.None : CursorLockMode.Locked;
             
             orbitCamera.enabled = !inventoryOpened;
+        }
+        
+        if (Input.GetKeyDown(KeyCode.J) && questMenuUI != null)
+        {
+            questMenuOpened = !questMenuOpened;
+            questMenuUI.SetActive(questMenuOpened);
+
+            Cursor.visible = questMenuOpened;
+            Cursor.lockState = questMenuOpened ? CursorLockMode.None : CursorLockMode.Locked;
+            orbitCamera.enabled = !questMenuOpened;
         }
 
         if (Input.GetKeyDown(KeyCode.H))
@@ -242,7 +261,8 @@ public class Player : MonoBehaviour
         {
             if (targetedNPC != null)
             {
-                dialogueSystem.StartDialogue(targetedNPC.npcData, targetedNPC.startingNode);
+                DialogueNode node = targetedNPC.GetCurrentStartingNode();
+                dialogueSystem.StartDialogue(targetedNPC.npcData, node);
                 return;
             }
             

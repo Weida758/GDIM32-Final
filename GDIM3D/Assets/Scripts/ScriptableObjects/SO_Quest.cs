@@ -6,7 +6,7 @@ public class SO_Quest : ScriptableObject
 {
     [Header("Quest Info")]
     public int questId;
-    public string questTitle;
+    public string questName;
     [TextArea(3, 6)] public string questDescription;
 
     [Header("Objectives")] 

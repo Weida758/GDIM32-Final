@@ -1,5 +1,11 @@
 using UnityEngine;
 
+public enum QuestAction
+{
+    None,
+    AcceptQuest,
+    CompleteQuest
+}
 [CreateAssetMenu(fileName = "DialogueLine", menuName = "Scriptable Objects/DialogueLine", order = 1)]
 public class DialogueNode : ScriptableObject
 {
@@ -14,4 +20,11 @@ public class DialogueNode : ScriptableObject
     // so, for example, if the player chooses the first option (= index 0) from _playerReplyOptions,
     // the next DialogueLine that should be shown is index 0 in _npcReplies
     public DialogueNode[] _npcReplies;
+
+    [Header("Quest Integration")]
+    [Tooltip("Quest Action to perform when this node is reached")]
+    public QuestAction questAction = QuestAction.None;
+    
+    [Tooltip("The quest associated with this action")]
+    public SO_Quest questReference;
 }
